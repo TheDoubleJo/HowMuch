@@ -1,0 +1,19 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jetpack-io/devbox/0.10.3/.schema/devbox.schema.json",
+  "packages": [
+    "python@latest",
+    "poetry@latest"
+  ],
+  "env": {
+  },
+  "shell": {
+    "init_hook": [
+      "poetry install",
+      "poetry shell"
+    ],
+    "scripts": {
+      "run_test": "poetry run python -m how_much",
+      "test": "poetry run pytest"
+    }
+  }
+}
