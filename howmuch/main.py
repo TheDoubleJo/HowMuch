@@ -1,19 +1,31 @@
 """Main"""
 
 import os
+from typing import Annotated
 import requests
-from fastapi import FastAPI
+import uvicorn
+from fastapi import Depends, FastAPI
+from howmuch.security import User, get_current_active_user, router
 
-app = FastAPI()
 
 YNAB_BASE_URL = "https://api.ynab.com/v1"
 
 
+app = FastAPI()
+app.include_router(router)
+
+
 @app.get("/left-in-budget/{budget_id}/{category_id}")
-async def left_in_budget(budget_id: str, category_id: str):
+async def left_in_budget(
+    budget_id: str,
+    category_id: str,
+    current_user: Annotated[User, Depends(get_current_active_user)],
+):
     """left_in_budget"""
 
     ynab_access_token = os.environ.get("YNAB_ACCESS_TOKEN")
+
+    print(current_user)
 
     headers = {"Authorization": f"Bearer {ynab_access_token}"}
     response = requests.get(
@@ -28,3 +40,7 @@ async def left_in_budget(budget_id: str, category_id: str):
         return {"balance": data["data"]["category"]["balance"]}
 
     return data
+
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
