@@ -13,3 +13,6 @@ How much money I have on YNAB ?
 ## Start:
 - devbox shell
 - uvicorn howmuch.main:app --reload
+
+## cicd:
+dagger call test-and-publish --src=..:howmuchview

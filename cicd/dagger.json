@@ -1,0 +1,17 @@
+{
+  "name": "cicd",
+  "sdk": "python",
+  "source": "dagger",
+  "engineVersion": "v0.11.1",
+  "views": [
+    {
+      "name": "howmuchview",
+      "patterns": [
+        "!.venv",
+        "!.pytest_cache",
+        "!.devbox",
+        "!.vscode"
+      ]
+    }
+  ]
+}
