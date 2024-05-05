@@ -1,7 +1,5 @@
 """cicd"""
 
-import sys
-import os
 import dagger
 from dagger import dag, function, object_type
 
@@ -11,10 +9,10 @@ class Cicd:
     """cicd"""
 
     @function
-    async def test_and_publish(self, src: dagger.Directory) -> str:
+    def test_and_publish(self, src: dagger.Directory) -> str:
         """main"""
 
-        return await (
+        output = (
             dag.container()
             .from_("python:3.11-slim-bullseye")
             .with_mounted_directory("/mnt", src)
@@ -24,6 +22,8 @@ class Cicd:
             .with_exec(["poetry", "run", "pytest"])
             .stdout()
         )
+
+        return output
 
         # build python package
         # build_dir = (
