@@ -17,5 +17,5 @@ jobs:
         with:
           version: "latest"
           verb: call
-          module: Cicd
+          module: cicd
           args: test-and-publish --src=..:howmuchview
