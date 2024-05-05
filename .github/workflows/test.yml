@@ -22,3 +22,8 @@ jobs:
           module: cicd
           workdir: cicd
           args: test-and-publish --src=..:howmuchview
+        env:
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          YNAB_ACCESS_TOKEN: ${{ secrets.YNAB_ACCESS_TOKEN }}
+          BUDGET_ID: ${{ secrets.BUDGET_ID }}
+          CATEGORY_ID: ${{ secrets.CATEGORY_ID }}
