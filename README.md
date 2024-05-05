@@ -10,6 +10,12 @@ How much money I have on YNAB ?
 ## Add dev dependencies:
 - poetry add requests -G dev
 
+## Local dev:
+Add
+dagger-io = {path = "cicd/dagger/sdk", develop = true}
+
+in dev dependencies in pyproject.toml
+
 ## Start:
 - devbox shell
 - uvicorn howmuch.main:app --reload

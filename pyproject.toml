@@ -20,12 +20,6 @@ pytest = "^8.1.1"
 pytest-mock = "^3.14.0"
 python-dotenv = "^1.0.1"
 
-[tool.poetry.group.localdev]
-optional = true
-
-[tool.poetry.group.localdev.dependencies]
-dagger-io = {path = "cicd/dagger/sdk", develop = true}
-
 
 [build-system]
 requires = ["poetry-core"]
