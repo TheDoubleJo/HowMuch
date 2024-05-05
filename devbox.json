@@ -7,12 +7,12 @@
   "env": {},
   "shell": {
     "init_hook": [
-      "poetry install",
+      "poetry install --with localdev",
       "poetry shell"
     ],
     "scripts": {
       "run_test": "poetry run python -m how_much",
-      "test":     "poetry run pytest"
+      "test": "poetry run pytest"
     }
   }
 }
