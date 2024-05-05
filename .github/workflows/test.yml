@@ -10,6 +10,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: ls
+        run: ls -a
       - name: cd
         run: cd cicd
       - name: Call Dagger Function
