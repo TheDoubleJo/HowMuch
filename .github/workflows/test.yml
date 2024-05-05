@@ -10,14 +10,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: ls
-        run: ls -a
-      - name: cd
-        run: cd cicd
       - name: Call Dagger Function
         uses: dagger/dagger-for-github@v5
         with:
           version: "latest"
           verb: call
           module: cicd
+          workdir: cicd
           args: test-and-publish --src=..:howmuchview
