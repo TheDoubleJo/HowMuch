@@ -14,6 +14,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: .env file
+        run: |
+          echo "SECRET_KEY=$SECRET_KEY" >> .env
+          echo "YNAB_ACCESS_TOKEN=$YNAB_ACCESS_TOKEN" >> .env
+          echo "BUDGET_ID=$BUDGET_ID" >> .env
+          echo "CATEGORY_ID=$CATEGORY_ID" >> .env
+        env:
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          YNAB_ACCESS_TOKEN: ${{ secrets.YNAB_ACCESS_TOKEN }}
+          BUDGET_ID: ${{ secrets.BUDGET_ID }}
+          CATEGORY_ID: ${{ secrets.CATEGORY_ID }}
+
       - name: Call Dagger Function
         uses: dagger/dagger-for-github@v5
         with:
@@ -22,8 +34,3 @@ jobs:
           module: cicd
           workdir: cicd
           args: test-and-publish --src=..:howmuchview
-        env:
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          YNAB_ACCESS_TOKEN: ${{ secrets.YNAB_ACCESS_TOKEN }}
-          BUDGET_ID: ${{ secrets.BUDGET_ID }}
-          CATEGORY_ID: ${{ secrets.CATEGORY_ID }}
