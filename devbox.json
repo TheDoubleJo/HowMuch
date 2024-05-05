@@ -7,7 +7,7 @@
   "env": {},
   "shell": {
     "init_hook": [
-      "poetry install --with localdev",
+      "poetry install",
       "poetry shell"
     ],
     "scripts": {

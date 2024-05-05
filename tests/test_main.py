@@ -22,8 +22,8 @@ app.dependency_overrides[get_current_active_user] = get_current_active_user_over
 def test_route():
     """Test route left"""
 
-    budget_id = os.environ.get("budget_id")
-    category_id = os.environ.get("category_id")
+    budget_id = os.environ.get("BUDGET_ID")
+    category_id = os.environ.get("CATEGORY_ID")
 
     response = client.get(f"/left-in-budget/{budget_id}/{category_id}")
     assert response.status_code == 200
