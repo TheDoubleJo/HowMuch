@@ -18,7 +18,8 @@ in dev dependencies in pyproject.toml
 
 ## Start:
 - devbox shell
-- uvicorn howmuch.main:app --reload
+- fastapi dev howmuch/main.py
 
 ## cicd:
-dagger call test-and-publish --src=..:howmuchview
+dagger call test --src=..:howmuchview
+dagger call build-and-publish --src=..:howmuchview --registry_username=TheDoubleJo --registry_password=cmd:"echo <GH_TOKEN>"

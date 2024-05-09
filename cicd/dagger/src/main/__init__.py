@@ -9,8 +9,8 @@ class Cicd:
     """cicd"""
 
     @function
-    def test_and_publish(self, src: dagger.Directory) -> str:
-        """main"""
+    def test(self, src: dagger.Directory) -> str:
+        """Test with pytest"""
 
         output = (
             dag.container()
@@ -25,31 +25,47 @@ class Cicd:
 
         return output
 
-        # build python package
-        # build_dir = (
-        #     await runner.with_exec(
-        #         ["python3", "-m", "pip", "install", "--upgrade", "build"]
-        #     )
-        #     .with_exec(["python3", "-m", "build"])
-        #     .directory("dist")
-        # )
+    @function
+    async def build_and_publish(
+        self,
+        src: dagger.Directory,
+        registry_username: str,
+        registry_password: dagger.Secret,
+    ):
+        """Build and publish"""
 
-        # await build_dir.export("dist")
-
-        # build and publish image
-        # image_ref = "marvelousmlops/dagger_example:latest"
-        # secret = client.set_secret(
-        #     name="dockerhub_secret", plaintext=os.environ["DOCKERHUB_TOKEN"]
-        # )
-        # build = (
-        #     src.with_directory("/tmp/dist", client.host().directory("dist"))
-        #     .docker_build(dockerfile="Dockerfile_dagger")
-        #     .with_registry_auth(
-        #         address=f"https://docker.io/{image_ref}",
-        #         secret=secret,
-        #         username=os.environ["DOCKERHUB_USER"],
-        #     )
-        # )
-        # await build.publish(f"{image_ref}")
-
-        # print(f"Published image to: {image_ref}")
+        await (
+            dag.container()
+            .from_("python:3.11")
+            .with_directory("/app", src)
+            .with_workdir("/app")
+            .with_exec(["pip", "install", "poetry"])
+            .with_exec(
+                [
+                    "poetry",
+                    "export",
+                    "-f",
+                    "requirements.txt",
+                    "--output",
+                    "requirements.txt",
+                    "--without-hashes",
+                ]
+            )
+            .with_exec(
+                [
+                    "pip",
+                    "install",
+                    "--no-cache-dir",
+                    "--upgrade",
+                    "-r",
+                    "requirements.txt",
+                ]
+            )
+            .with_default_args(["fastapi", "run", "howmuch/main.py", "--port", "80"])
+            .with_registry_auth(
+                "ghcr.io/thedoublejo/howmuch:latest",
+                registry_username,
+                registry_password,
+            )
+            .publish("ghcr.io/thedoublejo/howmuch:latest")
+        )

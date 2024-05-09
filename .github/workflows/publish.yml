@@ -1,4 +1,4 @@
-name: test
+name: publish
 on: workflow_dispatch
 
 jobs:
@@ -28,4 +28,6 @@ jobs:
           verb: call
           module: cicd
           workdir: cicd
-          args: test --src=..:howmuchview
+          args: test-and-publish --src=..:howmuchview --registry_username=${{ github.actor }} --registry_password=env:GH_TOKEN
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
