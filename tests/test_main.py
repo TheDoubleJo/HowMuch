@@ -27,7 +27,7 @@ def test_route():
 
     response = client.get(f"/left-in-budget/{budget_id}/{category_id}")
     assert response.status_code == 200
-
+    a = 1 / 0
     data = response.json()
 
     assert isinstance(data["balance"], int)
