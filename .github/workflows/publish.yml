@@ -28,4 +28,6 @@ jobs:
           verb: call
           module: cicd
           workdir: cicd
-          args: build-and-publish --src=..:howmuchview --registry_username=${{ github.repository_owner }} --registry_password=cmd:"echo ${{ secrets.GH_TOKEN }}"
+          args: build-and-publish --src=..:howmuchview --registry_username=${{ github.repository_owner }} --registry_password=env:GH_TOKEN
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
