@@ -1,4 +1,6 @@
 name: publish
+run-name: version ${{ github.run_number }}
+
 on: workflow_dispatch
 
 permissions:
