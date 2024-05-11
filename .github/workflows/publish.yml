@@ -20,7 +20,7 @@ jobs:
           package-name: 'howmuch'
           package-type: 'container'
           min-versions-to-keep: 3
-          ignore-versions: '^(local|latest)$'
+          ignore-versions: '^local$'
 
       - name: Call Dagger Function
         uses: dagger/dagger-for-github@v5
