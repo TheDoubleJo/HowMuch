@@ -34,7 +34,7 @@ class Cicd:
             .stdout()
         )
 
-        return output
+        return await output
 
     @function
     async def build_and_publish(
