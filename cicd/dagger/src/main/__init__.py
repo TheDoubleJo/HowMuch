@@ -8,6 +8,8 @@ from dagger import dag, function, object_type
 class Cicd:
     """cicd"""
 
+    BASE_PYTHON_IMAGE = "python:3.11"
+
     @function
     async def test(
         self,
@@ -21,7 +23,7 @@ class Cicd:
 
         output = (
             dag.container()
-            .from_("python:3.11-slim-bullseye")
+            .from_(self.BASE_PYTHON_IMAGE)
             .with_env_variable("SECRET_KEY", await secret_key.plaintext())
             .with_env_variable("YNAB_ACCESS_TOKEN", await ynab_access_token.plaintext())
             .with_env_variable("BUDGET_ID", await budget_id.plaintext())
@@ -44,12 +46,15 @@ class Cicd:
         registry_password: dagger.Secret,
         secret_key: dagger.Secret,
         ynab_access_token: dagger.Secret,
+        image_tag: str,
     ) -> dagger.Container:
         """Build and publish"""
 
+        image_name = f"ghcr.io/thedoublejo/howmuch:{image_tag}"
+
         requirements_file = (
             dag.container()
-            .from_("python:3.11")
+            .from_(self.BASE_PYTHON_IMAGE)
             .with_mounted_directory("/app", src)
             .with_workdir("/app")
             .with_exec(["pip", "install", "poetry"])
@@ -69,7 +74,7 @@ class Cicd:
 
         container_with_app = (
             dag.container()
-            .from_("python:3.11")
+            .from_(self.BASE_PYTHON_IMAGE)
             .with_env_variable("SECRET_KEY", await secret_key.plaintext())
             .with_env_variable("YNAB_ACCESS_TOKEN", await ynab_access_token.plaintext())
             .with_directory("/app", src)
@@ -89,7 +94,7 @@ class Cicd:
         )
 
         await container_with_app.with_registry_auth(
-            "ghcr.io/thedoublejo/howmuch:latest", registry_username, registry_password
-        ).publish("ghcr.io/thedoublejo/howmuch:latest")
+            image_name, registry_username, registry_password
+        ).publish(image_name)
 
         return container_with_app
