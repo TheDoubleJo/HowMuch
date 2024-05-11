@@ -1,12 +1,9 @@
 """"Tests"""
 
 import os
-from dotenv import load_dotenv
 from fastapi.testclient import TestClient
 from howmuch.main import app
 from howmuch.security import get_current_active_user, User
-
-load_dotenv()
 
 
 def get_current_active_user_override():
