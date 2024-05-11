@@ -13,6 +13,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - uses: actions/delete-package-versions@v5
+        with: 
+          package-name: 'howmuch'
+          package-type: 'container'
+          min-versions-to-keep: 3
+          ignore-versions: '^(local|latest)$'
+
       - name: Call Dagger Function
         uses: dagger/dagger-for-github@v5
         with:
