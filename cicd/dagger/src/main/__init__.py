@@ -9,12 +9,23 @@ class Cicd:
     """cicd"""
 
     @function
-    def test(self, src: dagger.Directory) -> str:
+    async def test(
+        self,
+        src: dagger.Directory,
+        secret_key: dagger.Secret,
+        ynab_access_token: dagger.Secret,
+        budget_id: dagger.Secret,
+        category_id: dagger.Secret,
+    ) -> str:
         """Test with pytest"""
 
         output = (
             dag.container()
             .from_("python:3.11-slim-bullseye")
+            .with_env_variable("SECRET_KEY", await secret_key.plaintext())
+            .with_env_variable("YNAB_ACCESS_TOKEN", await ynab_access_token.plaintext())
+            .with_env_variable("BUDGET_ID", await budget_id.plaintext())
+            .with_env_variable("CATEGORY_ID", await category_id.plaintext())
             .with_mounted_directory("/mnt", src)
             .with_workdir("/mnt")
             .with_exec(["pip", "install", "poetry"])
