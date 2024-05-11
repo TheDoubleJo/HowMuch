@@ -22,4 +22,4 @@ in dev dependencies in pyproject.toml
 
 ## cicd:
 dagger call test --src=..:howmuchview
-dagger call build-and-publish --src=..:howmuchview --registry_username=TheDoubleJo --registry_password=cmd:"echo <GH_TOKEN>"
+dagger call build-and-publish --src=..:howmuchview --registry_username=TheDoubleJo --registry_password=env:GH_TOKEN --secret_key=env:SECRET_KEY --ynab_access_token=env:YNAB_ACCESS_TOKEN --budget_id=env:BUDGET_ID --category_id=env:CATEGORY_ID
