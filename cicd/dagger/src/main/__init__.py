@@ -44,8 +44,6 @@ class Cicd:
         registry_password: dagger.Secret,
         secret_key: dagger.Secret,
         ynab_access_token: dagger.Secret,
-        budget_id: dagger.Secret,
-        category_id: dagger.Secret,
     ) -> dagger.Container:
         """Build and publish"""
 
@@ -74,8 +72,6 @@ class Cicd:
             .from_("python:3.11")
             .with_env_variable("SECRET_KEY", await secret_key.plaintext())
             .with_env_variable("YNAB_ACCESS_TOKEN", await ynab_access_token.plaintext())
-            .with_env_variable("BUDGET_ID", await budget_id.plaintext())
-            .with_env_variable("CATEGORY_ID", await category_id.plaintext())
             .with_directory("/app", src)
             .with_workdir("/app")
             .with_file("requirements.txt", requirements_file)
