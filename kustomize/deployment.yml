@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: howmuch
+spec:
+  selector:
+    matchLabels:
+      app: howmuch
+  template:
+    metadata:
+      labels:
+        app: howmuch
+    spec:
+      containers:
+      - name: howmuch
+        image: ghcr.io/thedoublejo/howmuch:16
+        ports:
+        - containerPort: 80

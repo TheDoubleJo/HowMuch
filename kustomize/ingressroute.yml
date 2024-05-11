@@ -1,0 +1,16 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: howmuch
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`howmuch.duckdns.org`)
+    kind: Rule
+    services:
+    - name: howmuch
+      port: 8080
+  tls:
+    secretName: howmuch.duckdns.org
+
