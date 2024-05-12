@@ -29,8 +29,9 @@ jobs:
           verb: call
           module: cicd
           workdir: cicd
-          args: build-and-publish --src=..:howmuchview --registry_username=${{ github.repository_owner }} --registry_password=env:GH_TOKEN --secret_key=env:SECRET_KEY --ynab_access_token=env:YNAB_ACCESS_TOKEN --image_tag=${{ github.run_number }}
+          args: build-and-publish --src=..:howmuchview --registry_username=${{ github.repository_owner }} --registry_password=env:GH_TOKEN --secret_key=env:SECRET_KEY --jo_hashed_password=env:JO_HASHED_PASSWORD --ynab_access_token=env:YNAB_ACCESS_TOKEN --image_tag=${{ github.run_number }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
           YNAB_ACCESS_TOKEN: ${{ secrets.YNAB_ACCESS_TOKEN }}
+          JO_HASHED_PASSWORD: ${{ secrets.JO_HASHED_PASSWORD }}
