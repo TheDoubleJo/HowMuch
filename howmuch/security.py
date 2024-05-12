@@ -21,7 +21,7 @@ fake_users_db = {
         "username": "doublejo",
         "full_name": "Double Jo",
         "email": "doublejo@ik.me",
-        "hashed_password": "$2b$12$ZiOLAumITVoj/e3bydO4K.t8AkCgpMM/tbla76iS2xa.RAfwOT.IS",
+        "hashed_password": os.environ.get("JO_HASHED_PASSWORD"),
         "disabled": False,
     }
 }

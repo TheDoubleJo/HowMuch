@@ -15,6 +15,7 @@ class Cicd:
         self,
         src: dagger.Directory,
         secret_key: dagger.Secret,
+        jo_hashed_password: dagger.Secret,
         ynab_access_token: dagger.Secret,
         budget_id: dagger.Secret,
         category_id: dagger.Secret,
@@ -25,6 +26,9 @@ class Cicd:
             dag.container()
             .from_(self.BASE_PYTHON_IMAGE)
             .with_env_variable("SECRET_KEY", await secret_key.plaintext())
+            .with_env_variable(
+                "JO_HASHED_PASSWORD", await jo_hashed_password.plaintext()
+            )
             .with_env_variable("YNAB_ACCESS_TOKEN", await ynab_access_token.plaintext())
             .with_env_variable("BUDGET_ID", await budget_id.plaintext())
             .with_env_variable("CATEGORY_ID", await category_id.plaintext())
@@ -45,6 +49,7 @@ class Cicd:
         registry_username: str,
         registry_password: dagger.Secret,
         secret_key: dagger.Secret,
+        jo_hashed_password: dagger.Secret,
         ynab_access_token: dagger.Secret,
         image_tag: str,
     ) -> dagger.Container:
@@ -77,6 +82,9 @@ class Cicd:
             dag.container(platform=platform_arm)
             .from_(self.BASE_PYTHON_IMAGE)
             .with_env_variable("SECRET_KEY", await secret_key.plaintext())
+            .with_env_variable(
+                "JO_HASHED_PASSWORD", await jo_hashed_password.plaintext()
+            )
             .with_env_variable("YNAB_ACCESS_TOKEN", await ynab_access_token.plaintext())
             .with_directory("/app", src)
             .with_workdir("/app")
