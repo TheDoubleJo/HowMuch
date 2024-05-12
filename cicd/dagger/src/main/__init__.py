@@ -51,6 +51,7 @@ class Cicd:
         """Build and publish"""
 
         image_name = f"ghcr.io/thedoublejo/howmuch:{image_tag}"
+        platform_arm = dagger.Platform("linux/arm64")
 
         requirements_file = (
             dag.container()
@@ -73,7 +74,7 @@ class Cicd:
         )
 
         container_with_app = (
-            dag.container()
+            dag.container(platform=platform_arm)
             .from_(self.BASE_PYTHON_IMAGE)
             .with_env_variable("SECRET_KEY", await secret_key.plaintext())
             .with_env_variable("YNAB_ACCESS_TOKEN", await ynab_access_token.plaintext())
