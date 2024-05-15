@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: howmuch
-        image: ghcr.io/thedoublejo/howmuch:18
+        image: ghcr.io/thedoublejo/howmuch:19
         ports:
         - containerPort: 80
       imagePullSecrets:
