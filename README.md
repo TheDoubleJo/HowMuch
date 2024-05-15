@@ -21,6 +21,10 @@ in dev dependencies in pyproject.toml
 - fastapi dev howmuch/main.py
 
 ## cicd:
+```sh
 dagger call test --src=..:howmuchview --secret_key=env:SECRET_KEY --jo_hashed_password=env:JO_HASHED_PASSWORD --ynab_access_token=env:YNAB_ACCESS_TOKEN --budget_id=env:BUDGET_ID --category_id=env:CATEGORY_ID
+```
 
+```sh
 dagger call build-and-publish --src=..:howmuchview --registry_username=TheDoubleJo --registry_password=env:GH_TOKEN --secret_key=env:SECRET_KEY --jo_hashed_password=env:JO_HASHED_PASSWORD --ynab_access_token=env:YNAB_ACCESS_TOKEN --image_tag=local
+```
