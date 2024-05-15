@@ -10,7 +10,7 @@ spec:
     kind: Rule
     services:
     - name: howmuch
-      port: 8080
+      port: 8000
   tls:
     secretName: howmuch.duckdns.org
 

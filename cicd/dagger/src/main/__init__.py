@@ -99,7 +99,7 @@ class Cicd:
                     "requirements.txt",
                 ]
             )
-            .with_default_args(["fastapi", "run", "howmuch/main.py", "--port", "80"])
+            .with_default_args(["fastapi", "run", "howmuch/main.py", "--port", "8000"])
         )
 
         await container_with_app.with_registry_auth(

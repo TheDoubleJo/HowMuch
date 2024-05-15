@@ -4,8 +4,8 @@ metadata:
   name: howmuch
 spec:
   ports:
-  - port: 8080
-    targetPort: 80
+  - port: 8000
+    targetPort: 8000
   selector:
     app: howmuch
   type: ClusterIP
