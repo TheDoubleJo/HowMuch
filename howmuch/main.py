@@ -5,6 +5,7 @@ from typing import Annotated
 import requests
 import uvicorn
 from fastapi import Depends, FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from howmuch.security import User, get_current_active_user, router
 
 
@@ -12,6 +13,18 @@ YNAB_BASE_URL = "https://api.ynab.com/v1"
 
 
 app = FastAPI()
+
+origins = [
+    "*",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 app.include_router(router)
 
 
