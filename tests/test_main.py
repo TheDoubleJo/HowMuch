@@ -1,6 +1,5 @@
 """"Tests"""
 
-import os
 from fastapi.testclient import TestClient
 from howmuch.main import app
 from howmuch.security import get_current_active_user, User
@@ -19,10 +18,7 @@ app.dependency_overrides[get_current_active_user] = get_current_active_user_over
 def test_route():
     """Test route left"""
 
-    budget_id = os.environ.get("BUDGET_ID")
-    category_id = os.environ.get("CATEGORY_ID")
-
-    response = client.get(f"/left-in-budget/{budget_id}/{category_id}")
+    response = client.get("/left-in-budget")
     assert response.status_code == 200
 
     data = response.json()
