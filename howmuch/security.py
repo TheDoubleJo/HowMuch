@@ -23,6 +23,8 @@ fake_users_db = {
         "email": "doublejo@ik.me",
         "hashed_password": os.environ.get("JO_HASHED_PASSWORD"),
         "disabled": False,
+        "budget_id": "670e499b-c323-41c5-a428-7c3eeddd5a9c",
+        "category_id": "39e18d9b-9a91-4d6d-a85e-be656976205d",
     }
 }
 
@@ -47,6 +49,8 @@ class User(BaseModel):
     email: str | None = None
     full_name: str | None = None
     disabled: bool | None = None
+    budget_id: str
+    category_id: str
 
 
 class UserInDB(User):

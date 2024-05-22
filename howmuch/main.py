@@ -28,21 +28,17 @@ app.add_middleware(
 app.include_router(router)
 
 
-@app.get("/left-in-budget/{budget_id}/{category_id}")
+@app.get("/left-in-budget")
 async def left_in_budget(
-    budget_id: str,
-    category_id: str,
     current_user: Annotated[User, Depends(get_current_active_user)],
 ):
     """left_in_budget"""
 
     ynab_access_token = os.environ.get("YNAB_ACCESS_TOKEN")
 
-    print(current_user)
-
     headers = {"Authorization": f"Bearer {ynab_access_token}"}
     response = requests.get(
-        f"{YNAB_BASE_URL}/budgets/{budget_id}/categories/{category_id}",
+        f"{YNAB_BASE_URL}/budgets/{current_user.budget_id}/categories/{current_user.category_id}",
         headers=headers,
         timeout=10,
     )
